@@ -1,0 +1,10 @@
+<Serrures>
+    <Serrure uuid="111a222b-333c-444d-555e-666f777g888h">
+        <cardinalite>NORD</cardinalite>
+        <LieuRef uuid="456e1234-e89b-12d3-a456-426614174000"/>
+    </Serrure>
+    <Serrure uuid="999a888b-777c-666d-555e-444f333g222h">
+        <cardinalite>EST</cardinalite>
+        <LieuRef uuid="321e6789-e89b-12d3-a456-426614174000"/>
+    </Serrure>
+</Serrures>

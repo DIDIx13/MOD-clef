@@ -1,0 +1,14 @@
+<HistoriqueUtilisations>
+    <HistoriqueUtilisation uuid="a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6">
+        <ClefRef uuid="aaaabbbb-cccc-dddd-eeee-ffff00001111"/>
+        <SerrureRef uuid="111a222b-333c-444d-555e-666f777g888h"/>
+        <PersonneRef uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"/>
+        <dateUtilisation>2024-03-26T15:30:00</dateUtilisation>
+    </HistoriqueUtilisation>
+    <HistoriqueUtilisation uuid="p6o5n4m3-l2k1-j0i9-h8g7-f6e5d4c3b2a1">
+        <ClefRef uuid="22223333-4444-5555-6666-777788889999"/>
+        <SerrureRef uuid="999a888b-777c-666d-555e-444f333g222h"/>
+        <PersonneRef uuid="6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j"/>
+        <dateUtilisation>2024-03-27T10:15:00</dateUtilisation>
+    </HistoriqueUtilisation>
+</HistoriqueUtilisations>

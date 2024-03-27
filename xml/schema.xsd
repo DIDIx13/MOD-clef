@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="uuid">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="Personnes" type="personnesType"/>
+
+    <xs:complexType name="personnesType">
+        <xs:sequence>
+            <xs:element name="Personne" type="personneType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="personneType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="prenom" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="GroupeRef" type="uuid" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="Groupes" type="groupesType"/>
+
+    <xs:complexType name="groupesType">
+        <xs:sequence>
+            <xs:element name="Groupe" type="groupeType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="groupeType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="ParentGroupeRef" type="uuid" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="Lieux" type="lieuxType"/>
+
+    <xs:complexType name="lieuxType">
+        <xs:sequence>
+            <xs:element name="Lieu" type="lieuType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="lieuType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="Lieux" minOccurs="0" maxOccurs="unbounded" type="lieuxType"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+        <xs:attribute name="ParentLieuRef" type="uuid" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="Serrures" type="serruresType"/>
+
+    <xs:complexType name="serruresType">
+        <xs:sequence>
+            <xs:element name="Serrure" type="serrureType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="serrureType">
+        <xs:sequence>
+            <xs:element name="cardinalite" type="xs:string"/>
+            <xs:element name="LieuRef" type="uuid"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="Clefs" type="clefsType"/>
+
+    <xs:complexType name="clefsType">
+        <xs:sequence>
+            <xs:element name="Clef" type="clefType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="clefType">
+        <xs:sequence>
+            <xs:element name="numero_de_serie" type="xs:string"/>
+            <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="HistoriqueUtilisations" type="historiqueUtilisationsType"/>
+
+    <xs:complexType name="historiqueUtilisationsType">
+        <xs:sequence>
+            <xs:element name="HistoriqueUtilisation" type="historiqueUtilisationType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="historiqueUtilisationType">
+        <xs:sequence>
+            <xs:element name="ClefRef" type="uuid"/>
+            <xs:element name="SerrureRef" type="uuid"/>
+            <xs:element name="PersonneRef" type="uuid"/>
+            <xs:element name="dateUtilisation" type="xs:dateTime"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="Acces" type="accesType"/>
+
+    <xs:complexType name="accesType">
+        <xs:sequence>
+            <xs:element name="Acces" type="accesDetailType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="accesDetailType">
+        <xs:sequence>
+            <xs:element name="GroupeRef" type="uuid"/>
+            <xs:element name="LieuRef" type="uuid"/>
+            <xs:element name="dateDebut" type="xs:dateTime"/>
+            <xs:element name="dateFin" type="xs:dateTime"/>
+        </xs:sequence>
+        <xs:attribute name="uuid" type="uuid" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

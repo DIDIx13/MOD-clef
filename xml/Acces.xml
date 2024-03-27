@@ -1,0 +1,14 @@
+<Acces>
+    <Acces uuid="acces1-uuid-0000-0000-000000000000">
+        <GroupeRef uuid="12345678-1234-1234-1234-1234567890ab"/>
+        <LieuRef uuid="456e1234-e89b-12d3-a456-426614174000"/>
+        <dateDebut>2024-03-01T08:00:00</dateDebut>
+        <dateFin>2024-03-01T18:00:00</dateFin>
+    </Acces>
+    <Acces uuid="acces2-uuid-1111-1111-111111111111">
+        <GroupeRef uuid="abcdefab-abcd-abcd-abcd-abcdefabcdef"/>
+        <LieuRef uuid="321e6789-e89b-12d3-a456-426614174000"/>
+        <dateDebut>2024-03-02T08:00:00</dateDebut>
+        <dateFin>2024-03-02T18:00:00</dateFin>
+    </Acces>
+</Acces>
