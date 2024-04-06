@@ -1,0 +1,10 @@
+<Groupes>
+    <Groupe uuid="12345678-1234-1234-1234-1234567890ab">
+        <nom>HE-Arc Informatique</nom>
+        <description>Département Informatique de la HE-Arc</description>
+    </Groupe>
+    <Groupe uuid="abcdefab-abcd-abcd-abcd-abcdefabcdef">
+        <nom>HE-Arc Ingénierie</nom>
+        <description>Département Ingénierie de la HE-Arc</description>
+    </Groupe>
+</Groupes>

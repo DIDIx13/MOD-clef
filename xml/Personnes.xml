@@ -1,0 +1,14 @@
+<Personnes>
+    <Personne uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d">
+        <nom>Durand</nom>
+        <prenom>Sophie</prenom>
+        <email>sophie.durand@he-arc.ch</email>
+        <GroupeRef uuid="12345678-1234-1234-1234-1234567890ab"/>
+    </Personne>
+    <Personne uuid="6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j">
+        <nom>Petit</nom>
+        <prenom>Jean</prenom>
+        <email>jean.petit@he-arc.ch</email>
+        <GroupeRef uuid="abcdefab-abcd-abcd-abcd-abcdefabcdef"/>
+    </Personne>
+</Personnes>

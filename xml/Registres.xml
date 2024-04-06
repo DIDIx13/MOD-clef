@@ -1,0 +1,15 @@
+<Registres>
+    <Registre uuid="reg-001-uuid-0000-0000-000000000001">
+        <PersonneRef uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d"/>
+        <ClefRef uuid="aaaabbbb-cccc-dddd-eeee-ffff00001111"/>
+        <dateDebut>2024-03-01</dateDebut>
+        <dateFin>2024-03-31</dateFin>
+    </Registre>
+    <Registre uuid="reg-002-uuid-1111-1111-111111111112">
+        <PersonneRef uuid="6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j"/>
+        <ClefRef uuid="22223333-4444-5555-6666-777788889999"/>
+        <AccesRef uuid="acces1-uuid-0000-0000-000000000000"/>
+        <dateDebut>2024-04-01</dateDebut>
+        <dateFin>2024-04-30</dateFin>
+    </Registre>
+</Registres>

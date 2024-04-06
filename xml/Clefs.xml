@@ -1,0 +1,10 @@
+<Clefs>
+    <Clef uuid="aaaabbbb-cccc-dddd-eeee-ffff00001111">
+        <numero_de_serie>ABC123456</numero_de_serie>
+        <status>ACTIVE</status>
+    </Clef>
+    <Clef uuid="22223333-4444-5555-6666-777788889999">
+        <numero_de_serie>XYZ654321</numero_de_serie>
+        <status>INACTIVE</status>
+    </Clef>
+</Clefs>
