@@ -1,0 +1,451 @@
+<html>
+<head>
+	<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="report.css" type="text/css"/>
+	<title>Profile Diagram - MPD-R</title>
+	<script type="text/javascript" src="report.js"></script>
+	<script type="text/javascript" src="link_popup.js"></script>
+	<script type="text/javascript" src="tooltip.js"></script>
+</head>
+<body style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" onload="initPage();initDiagram();initGridDiagram();">
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_top">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-top: 2px #FF0000 solid;" id="spotlight_bottom">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_left">
+	</div>
+	<div style="position:absolute; z-index:2; visibility:hidden;border-left: 2px #FF0000 solid;" id="spotlight_right">
+	</div>
+	<canvas width="100" style="position:absolute; z-index:2; visibility:hidden" id="spotlight_c" height="100">
+	</canvas>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesTop">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; width:100px; height:100px; z-index:1; visibility:hidden" id="spotLightResourcesRight">
+		<table border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td>
+<a href="#top"><img style="border:none" src="../images/icons/BackToTop.gif" alt="Back to top"/></a>				</td>
+			</tr>
+			<tr>
+				<td>
+<a href="javascript:clearSpotLightFromOpenSpecButton();"><img style="border:none" src="../images/icons/OpenSpecification.gif" alt="Open specification"/></a>				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute;z-index:4;visibility:hidden" id="linkPopupMenuLayer">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="linkPopupMenuTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="referenceIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Ref.gif" style="border:none" onclick="movePopupPositionToReferenceIconPosition();resetPopupForReference();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="subdiagramIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Subdiagram.gif" style="border:none" onclick="movePopupPositionToSubdiagramIconPosition();resetPopupForSubdiagram();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="transitorIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Transitor.gif" style="border:none" onclick="movePopupPositionToTransitorIconPosition();resetPopupForTransitor();switchPopupShowHideStatus();" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div style="position:absolute; z-index:1; visibility:hidden; " id="documentationIconLayer">
+		<table border="0" cellpadding="3" cellspacing="0" style="font-size:1;">
+			<tr>
+				<td>
+					<img src="../images/icons/Documentation.png" style="border:none" />				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="HeaderText">
+		MOD clef	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="HeaderLine1">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine2">
+			</td>
+		</tr>
+		<tr>
+			<td class="HeaderLine3">
+			</td>
+		</tr>
+	</table>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="referencedBys">
+		<table border="0" width="100%" style="border-style:solid; border-width:1px; border-color:#000000; background:#FFFFFF; width:250px" id="referencedBysTable">
+		</table>
+	</div>
+	<div style="position:absolute; z-index:21; visibility:hidden" id="vplink">
+		<table border="1" cellpadding="0" cellspacing="0" bordercolor="#A9BFD3">
+			<tr>
+				<td>
+					<table border="0" cellpadding="0" width="100%" cellspacing="0">
+						<tr style="background:#DDDDDD">
+							<td style="font-size: 12px;" align="left">
+								<select onchange="vpLinkToggleName()" id="vplink-linkType">
+	<option value="Project Link">Project Link</option>
+	<option value="Page URL">Page URL</option>
+</select>
+							</td>
+							<td style="font-size: 12px;" align="right">
+								<input onclick="javascript: vpLinkToggleName()" id="vplink-checkbox" type="checkbox" />
+								<label for="vplink-checkbox">with Name</label>							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea id="vplink-text" style="width: 348px; height: 60px; border-color: #7EADD9; outline: none;"></textarea>				</td>
+			</tr>
+		</table>
+	</div>
+	<p>
+<a href="Profile_94Ib1fqGAqAAzjlJ.html" class="PageParentTitle">MPD-R : Profile</a>	</p>
+	<p class="PageTitle">
+		<span id="PageTitleText">
+			Profile Diagram - MPD-R		</span>
+<a onclick="javascript: showVpLink('profileMPDR.vpp://diagram/sJ871fqGAqAAzkcM', 'MPD-R\nprofileMPDR.vpp://diagram/sJ871fqGAqAAzkcM', 'MPD-R', this); return false;" style="padding-left: 16px; font-size: 12px" href="#"><img src="../images/icons/link.png" border="0"> link</a>	</p>
+	<div style="position: relative; padding-bottom: 20px;">
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: absolute; top: 0; left: 0; z-index: 20;" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon(),hideLinkPopup(),hideReferencedBys();">
+			<tr>
+				<td>
+<span class="TableContent">Jump to:</span>					<select id="SelectShape" class="TableContent" onChange="scrollWin('diagram', this.value);hideLinkPopup();showSpotLight('diagram', this.value)">
+<option value="">Please select a model element</option>
+<option value="shape|48.0|287.0|165.0|40.0|Stereotype_WJDzNC6GAqHWAUEk.html|Stereotype_WJDzNC6GAqHWAUEk.html|WJDzNC6GAqHWAUEj" id="optionWJDzNC6GAqHWAUEj">MPD-R-PostgreSQL : Stereotype</option>
+<option value="shape|321.0|126.0|136.0|40.0|Stereotype_JUqEGVaGAqAAziYN.html|Stereotype_JUqEGVaGAqAAziYN.html|JUqEGVaGAqAAziYM" id="optionJUqEGVaGAqAAziYM">use : Stereotype</option>
+<option value="shape|772.0|232.0|132.0|40.0|Stereotype_SdpJIRaGAqAAzh5h.html|Stereotype_SdpJIRaGAqAAzh5h.html|SdpJIRaGAqAAzh5g" id="optionSdpJIRaGAqAAzh5g">View : Stereotype</option>
+<option value="shape|753.0|152.0|157.0|40.0|Stereotype_PqrWIRaGAqAAzhte.html|Stereotype_PqrWIRaGAqAAzhte.html|3qrWIRaGAqAAzhtd" id="option3qrWIRaGAqAAzhtd">Sequence : Stereotype</option>
+<option value="shape|764.0|76.0|114.0|40.0|Stereotype_M9tWIRaGAqAAzhtU.html|Stereotype_M9tWIRaGAqAAzhtU.html|M9tWIRaGAqAAzhtT" id="optionM9tWIRaGAqAAzhtT">Triggers : Stereotype</option>
+<option value="shape|504.0|196.0|122.0|40.0|Stereotype_eqPD9haGAqACQylr.html|Stereotype_eqPD9haGAqACQylr.html|2qPD9haGAqACQylq" id="option2qPD9haGAqACQylq">IDX : Stereotype</option>
+<option value="shape|143.0|351.0|114.0|40.0|Stereotype_WbqkOhaGAqAAzhyJ.html|Stereotype_WbqkOhaGAqAAzhyJ.html|mbqkOhaGAqAAzhyI" id="optionmbqkOhaGAqAAzhyI">MPD-R-UML : Stereotype</option>
+<option value="shape|504.0|126.0|136.0|40.0|Stereotype_EtFXZeaD_AAAAR1I.html|Stereotype_EtFXZeaD_AAAAR1I.html|EtFXZeaD.AAAAR1H" id="optionEtFXZeaD.AAAAR1H">specific-to : Stereotype</option>
+<option value="shape|504.0|256.0|141.0|40.0|Stereotype_jv7QqSaGAqACXylw.html|Stereotype_jv7QqSaGAqACXylw.html|Dv7QqSaGAqACXylv" id="optionDv7QqSaGAqACXylv">RESSOURCES : Stereotype</option>
+<option value="shape|504.0|64.0|117.0|40.0|Stereotype_aP_6P4aGAqACbr6G.html|Stereotype_aP_6P4aGAqACbr6G.html|aP_6P4aGAqACbr6F" id="optionaP_6P4aGAqACbr6F">JNL : Stereotype</option>
+<option value="shape|504.0|2.0|117.0|40.0|Stereotype_T016P4aGAqACbr5j.html|Stereotype_T016P4aGAqACbr5j.html|T016P4aGAqACbr5i" id="optionT016P4aGAqACbr5i">TAPIS : Stereotype</option>
+<option value="shape|48.0|223.0|127.0|40.0|Stereotype__Mn71fqGAqAAzlNw.html|Stereotype__Mn71fqGAqAAzlNw.html|_Mn71fqGAqAAzlNv" id="option_Mn71fqGAqAAzlNv">MPD-R-MySQL : Stereotype</option>
+<option value="shape|14.0|165.0|129.0|40.0|Stereotype_RQt71fqGAqAAzlMU.html|Stereotype_RQt71fqGAqAAzlMU.html|hQt71fqGAqAAzlMT" id="optionhQt71fqGAqAAzlMT">MPD-R-MSSQL : Stereotype</option>
+<option value="shape|2.0|112.0|114.0|40.0|Stereotype_izZ71fqGAqAAzlHl.html|Stereotype_izZ71fqGAqAAzlHl.html|izZ71fqGAqAAzlHk" id="optionizZ71fqGAqAAzlHk">MPD-R-ORA : Stereotype</option>
+<option value="shape|86.0|2.0|368.0|40.0|Stereotype_UZW71fqGAqAAzknn.html|Stereotype_UZW71fqGAqAAzknn.html|3pW71fqGAqAAzkm3" id="option3pW71fqGAqAAzkm3">MPD-R : Stereotype</option>
+</select>				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="0" width="100%" cellspacing="0" style="position: relative; top: 24;">
+			<tr>
+				<td>
+					<img id="diagram" src="../images/MPDR.png" usemap="#diagram_map" class="Image" width="914" height="395"/>
+					<map name="diagram_map">
+<area imageId="diagram" coords="98.0, 42.0, 98.0, 112.0, 112.0, 112.0, 112.0, 42.0" coords2="98.0, 42.0, 98.0, 112.0, 112.0, 112.0, 112.0, 42.0" shape="poly" alt=":Generalization" id="areadiagram_map_4I171fqGAqAAzlMJ_default" href="Generalization_Mw171fqGAqAAzlMI.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="126.0, 42.0, 126.0, 165.0, 140.0, 165.0, 140.0, 42.0" coords2="126.0, 42.0, 126.0, 165.0, 140.0, 165.0, 140.0, 42.0" shape="poly" alt=":Generalization" id="areadiagram_map_dsz71fqGAqAAzlMe_default" href="Generalization_zMz71fqGAqAAzlMd.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="156.0, 42.0, 156.0, 223.0, 170.0, 223.0, 170.0, 42.0" coords2="156.0, 42.0, 156.0, 223.0, 170.0, 223.0, 170.0, 42.0" shape="poly" alt=":Generalization" id="areadiagram_map_zOv71fqGAqAAzlN2_default" href="Generalization_b2v71fqGAqAAzlN1.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="226.0, 42.0, 226.0, 351.0, 240.0, 351.0, 240.0, 42.0" coords2="226.0, 42.0, 226.0, 351.0, 240.0, 351.0, 240.0, 42.0" shape="poly" alt=":Generalization" id="areadiagram_map_3XOkOhaGAqAAzhyc_default" href="Generalization_TnOkOhaGAqAAzhyb.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="192.0, 42.0, 192.0, 287.0, 206.0, 287.0, 206.0, 42.0" coords2="192.0, 42.0, 192.0, 287.0, 206.0, 287.0, 206.0, 42.0" shape="poly" alt=":Generalization" id="areadiagram_map_6wvzNC6GAqHWAUFO_default" href="Generalization_wwvzNC6GAqHWAUFN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="48, 287, 213, 327" coords2="48, 287, 213, 327" shape="rect" alt="MPD-R-PostgreSQL:Stereotype" id="areadiagram_map_WJDzNC6GAqHWAUEj_default" href="Stereotype_WJDzNC6GAqHWAUEk.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="321, 126, 457, 166" coords2="321, 126, 457, 166" shape="rect" alt="use:Stereotype" id="areadiagram_map_JUqEGVaGAqAAziYM_default" href="Stereotype_JUqEGVaGAqAAziYN.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="772, 232, 904, 272" coords2="772, 232, 904, 272" shape="rect" alt="View:Stereotype" id="areadiagram_map_SdpJIRaGAqAAzh5g_default" href="Stereotype_SdpJIRaGAqAAzh5h.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="753, 152, 910, 192" coords2="753, 152, 910, 192" shape="rect" alt="Sequence:Stereotype" id="areadiagram_map_3qrWIRaGAqAAzhtd_default" href="Stereotype_PqrWIRaGAqAAzhte.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="764, 76, 878, 116" coords2="764, 76, 878, 116" shape="rect" alt="Triggers:Stereotype" id="areadiagram_map_M9tWIRaGAqAAzhtT_default" href="Stereotype_M9tWIRaGAqAAzhtU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="504, 196, 626, 236" coords2="504, 196, 626, 236" shape="rect" alt="IDX:Stereotype" id="areadiagram_map_2qPD9haGAqACQylq_default" href="Stereotype_eqPD9haGAqACQylr.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="143, 351, 257, 391" coords2="143, 351, 257, 391" shape="rect" alt="MPD-R-UML:Stereotype" id="areadiagram_map_mbqkOhaGAqAAzhyI_default" href="Stereotype_WbqkOhaGAqAAzhyJ.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="504, 126, 640, 166" coords2="504, 126, 640, 166" shape="rect" alt="specific-to:Stereotype" id="areadiagram_map_EtFXZeaD.AAAAR1H_default" href="Stereotype_EtFXZeaD_AAAAR1I.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="504, 256, 645, 296" coords2="504, 256, 645, 296" shape="rect" alt="RESSOURCES:Stereotype" id="areadiagram_map_Dv7QqSaGAqACXylv_default" href="Stereotype_jv7QqSaGAqACXylw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="504, 64, 621, 104" coords2="504, 64, 621, 104" shape="rect" alt="JNL:Stereotype" id="areadiagram_map_aP_6P4aGAqACbr6F_default" href="Stereotype_aP_6P4aGAqACbr6G.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="504, 2, 621, 42" coords2="504, 2, 621, 42" shape="rect" alt="TAPIS:Stereotype" id="areadiagram_map_T016P4aGAqACbr5i_default" href="Stereotype_T016P4aGAqACbr5j.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="48, 223, 175, 263" coords2="48, 223, 175, 263" shape="rect" alt="MPD-R-MySQL:Stereotype" id="areadiagram_map__Mn71fqGAqAAzlNv_default" href="Stereotype__Mn71fqGAqAAzlNw.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="14, 165, 143, 205" coords2="14, 165, 143, 205" shape="rect" alt="MPD-R-MSSQL:Stereotype" id="areadiagram_map_hQt71fqGAqAAzlMT_default" href="Stereotype_RQt71fqGAqAAzlMU.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="2, 112, 116, 152" coords2="2, 112, 116, 152" shape="rect" alt="MPD-R-ORA:Stereotype" id="areadiagram_map_izZ71fqGAqAAzlHk_default" href="Stereotype_izZ71fqGAqAAzlHl.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+<area imageId="diagram" coords="86, 2, 454, 42" coords2="86, 2, 454, 42" shape="rect" alt="MPD-R:Stereotype" id="areadiagram_map_3pW71fqGAqAAzkm3_default" href="Stereotype_UZW71fqGAqAAzknn.html" onmouseover="hideReferenceIcon(),hideSubdiagramIcon(),hideTransitorIcon()" onmousedown="clearSpotLight();"/>
+</map>
+				</td>
+			</tr>
+		</table>
+		<p>
+		</p>
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="Category">
+				Model Elements			</td>
+		</tr>
+		<tr>
+			<td style="height: 5px">
+			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td colSpan="4" class="TableHeaderLine">
+			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine1">
+			</td>
+		</tr>
+		<tr class="TableHeader">
+			<td class="TableCellSpaceHolder10Px">
+			</td>
+			<td width="30%">
+<span class="TableHeaderText">Name</span>			</td>
+			<td class="TableCellSpaceHolder20Px">
+			</td>
+			<td>
+<span class="TableHeaderText">Description</span>			</td>
+		</tr>
+		<tr>
+			<td colSpan="4" class="TableHeaderLine2">
+			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_WJDzNC6GAqHWAUEk.html" class="ItemLink">MPD-R-PostgreSQL : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_JUqEGVaGAqAAziYN.html" class="ItemLink">use : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_SdpJIRaGAqAAzh5h.html" class="ItemLink">View : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_PqrWIRaGAqAAzhte.html" class="ItemLink">Sequence : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_M9tWIRaGAqAAzhtU.html" class="ItemLink">Triggers : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_eqPD9haGAqACQylr.html" class="ItemLink">IDX : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_WbqkOhaGAqAAzhyJ.html" class="ItemLink">MPD-R-UML : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_EtFXZeaD_AAAAR1I.html" class="ItemLink">specific-to : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_jv7QqSaGAqACXylw.html" class="ItemLink">RESSOURCES : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_aP_6P4aGAqACbr6G.html" class="ItemLink">JNL : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_T016P4aGAqACbr5j.html" class="ItemLink">TAPIS : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype__Mn71fqGAqAAzlNw.html" class="ItemLink">MPD-R-MySQL : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_RQt71fqGAqAAzlMU.html" class="ItemLink">MPD-R-MSSQL : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow2">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_izZ71fqGAqAAzlHl.html" class="ItemLink">MPD-R-ORA : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+		<tr class="TableRow1">
+			<td>
+			</td>
+			<td>
+				<span class="TableContent">
+					<div style="float: left; width: 18px !important;height: 18px !important;background-image:url(../images/icons/Stereotype.png) !important; background-image:url(''); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icons/Stereotype.png'); background-repeat: no-repeat;">
+					</div>
+					&nbsp; <a href="Stereotype_UZW71fqGAqAAzknn.html" class="ItemLink">MPD-R : Stereotype</a>				</span>
+			</td>
+			<td>
+			</td>
+			<td style="padding: 5px 0">
+<span class="TableContent Documentation"></span>			</td>
+		</tr>
+	</table>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="TableCellSpaceHolder1PxTall">
+			</td>
+		</tr>
+		<tr>
+			<td class="TableFooter">
+			</td>
+		</tr>
+	</table>
+	<div style="height: 20px">
+	</div>
+	<table border="0" cellpadding="0" width="100%" cellspacing="0">
+		<tr>
+			<td class="FooterLine">
+			</td>
+		</tr>
+	</table>
+	<div class="HeaderText">
+		MOD clef	</div>
+</body>
+</html>
