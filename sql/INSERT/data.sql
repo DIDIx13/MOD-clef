@@ -1,45 +1,59 @@
--- Insertions pour la table Personnes
-INSERT INTO Personnes (uuid, nom, prenom, email) VALUES ('1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', 'Durand', 'Sophie', 'sophie.durand@he-arc.ch');
-INSERT INTO Personnes (uuid, nom, prenom, email) VALUES ('6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', 'Petit', 'Jean', 'jean.petit@he-arc.ch');
+-- Insertions pour les groupes parents
+INSERT INTO Groupes (id, nom, description) VALUES (Groupe_SEQPK.NEXTVAL, 'HE-Arc', 'Groupe parent de l''école HE-Arc');
+INSERT INTO Groupes (id, nom, description) VALUES (Groupe_SEQPK.NEXTVAL, 'Gestion', 'Sous-groupe Gestion de HE-Arc');
+INSERT INTO Groupes (id, nom, description) VALUES (Groupe_SEQPK.NEXTVAL, 'Ingénierie', 'Sous-groupe Ingénierie de HE-Arc');
 
--- Insertions pour la table Groupes
-INSERT INTO Groupes (uuid, nom, description) VALUES ('12345678-1234-1234-1234-1234567890ab', 'HE-Arc Informatique', 'Département Informatique de la HE-Arc');
-INSERT INTO Groupes (uuid, nom, description) VALUES ('abcdefab-abcd-abcd-abcd-abcdefabcdef', 'HE-Arc Ingénierie', 'Département Ingénierie de la HE-Arc');
+-- Insertions pour les groupes personnels
+INSERT INTO Groupes (id, nom, description) VALUES (Groupe_SEQPK.NEXTVAL, 'Durand', 'Groupe personnel de Sophie Durand');
+INSERT INTO Groupes (id, nom, description) VALUES (Groupe_SEQPK.NEXTVAL, 'Petit', 'Groupe personnel de Jean Petit');
+
+-- Insertions pour la table Personnes
+INSERT INTO Personnes (id, Groupe_membre_de_id, nom, prenom, email) VALUES (Personne_SEQPK.NEXTVAL, (SELECT id FROM Groupes WHERE nom = 'Durand'), 'Durand', 'Sophie', 'sophie.durand@he-arc.ch');
+INSERT INTO Personnes (id, Groupe_membre_de_id, nom, prenom, email) VALUES (Personne_SEQPK.NEXTVAL, (SELECT id FROM Groupes WHERE nom = 'Petit'), 'Petit', 'Jean', 'jean.petit@he-arc.ch');
 
 -- Insertions pour la table Lieux
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('456e1234-e89b-12d3-a456-426614174000', 'Campus Arc 1', NULL);
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('789e1234-e89b-12d3-a456-426614174001', '1er Étage', '456e1234-e89b-12d3-a456-426614174000');
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('123f4567-e89b-12d3-a456-426614174001', 'Classe A101', '789e1234-e89b-12d3-a456-426614174001');
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('234g5678-e89b-12d3-a456-426614174002', 'Classe A102', '789e1234-e89b-12d3-a456-426614174001');
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('321e6789-e89b-12d3-a456-426614174000', 'Campus Arc 2', NULL);
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('890f1234-e89b-12d3-a456-426614174003', 'Rez-de-chaussée', '321e6789-e89b-12d3-a456-426614174000');
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('345h6789-e89b-12d3-a456-426614174004', 'Classe B001', '890f1234-e89b-12d3-a456-426614174003');
-INSERT INTO Lieux (uuid, nom, parent_uuid) VALUES ('456i7890-e89b-12d3-a456-426614174005', 'Classe B002', '890f1234-e89b-12d3-a456-426614174003');
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Campus Arc 1', NULL);
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, '1er Étage', (SELECT id FROM Lieux WHERE nom = 'Campus Arc 1'));
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Classe A101', (SELECT id FROM Lieux WHERE nom = '1er Étage'));
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Classe A102', (SELECT id FROM Lieux WHERE nom = '1er Étage'));
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Campus Arc 2', NULL);
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Rez-de-chaussée', (SELECT id FROM Lieux WHERE nom = 'Campus Arc 2'));
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Classe B001', (SELECT id FROM Lieux WHERE nom = 'Rez-de-chaussée'));
+INSERT INTO Lieux (id, nom, Lieu_contient_id) VALUES (Lieu_SEQPK.NEXTVAL, 'Classe B002', (SELECT id FROM Lieux WHERE nom = 'Rez-de-chaussée'));
 
 -- Insertions pour la table Serrures
-INSERT INTO Serrures (uuid, cardinalite, lieu_ref_uuid) VALUES ('111a222b-333c-444d-555e-666f777g888h', 'NORD', '456e1234-e89b-12d3-a456-426614174000');
-INSERT INTO Serrures (uuid, cardinalite, lieu_ref_uuid) VALUES ('999a888b-777c-666d-555e-444f333g222h', 'EST', '321e6789-e89b-12d3-a456-426614174000');
+INSERT INTO Serrures (id, cardinalite, Lieu_verouille_id) VALUES (Serrure_SEQPK.NEXTVAL, 'NORD', (SELECT id FROM Lieux WHERE nom = 'Campus Arc 1'));
+INSERT INTO Serrures (id, cardinalite, Lieu_verouille_id) VALUES (Serrure_SEQPK.NEXTVAL, 'EST', (SELECT id FROM Lieux WHERE nom = 'Campus Arc 2'));
 
 -- Insertions pour la table Clefs
-INSERT INTO Clefs (uuid, numero_de_serie, status) VALUES ('aaaabbbb-cccc-dddd-eeee-ffff00001111', 'ABC123456', 'ACTIVE');
-INSERT INTO Clefs (uuid, numero_de_serie, status) VALUES ('22223333-4444-5555-6666-777788889999', 'XYZ654321', 'INACTIVE');
+INSERT INTO Clefs (id, numero_de_serie, status) VALUES (Clef_SEQPK.NEXTVAL, 'ABC123456', 'ACTIVE');
+INSERT INTO Clefs (id, numero_de_serie, status) VALUES (Clef_SEQPK.NEXTVAL, 'XYZ654321', 'INACTIVE');
 
 -- Insertions pour la table Acces
-INSERT INTO Acces (uuid, groupe_ref_uuid, lieu_ref_uuid, dateDebut, dateFin) VALUES ('acces1-uuid-0000-0000-000000000000', '12345678-1234-1234-1234-1234567890ab', '456e1234-e89b-12d3-a456-426614174000', TO_TIMESTAMP('2024-03-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2024-03-01 18:00:00', 'YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO Acces (uuid, groupe_ref_uuid, lieu_ref_uuid, dateDebut, dateFin) VALUES ('acces2-uuid-1111-1111-111111111111', 'abcdefab-abcd-abcd-abcd-abcdefabcdef', '321e6789-e89b-12d3-a456-426614174000', TO_TIMESTAMP('2024-03-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2024-03-02 18:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO Acces (iddep, Groupe_id, Lieu_id, date_debut, date_fin) VALUES (Acces_SEQPK.NEXTVAL, (SELECT id FROM Groupes WHERE nom = 'Gestion'), (SELECT id FROM Lieux WHERE nom = 'Campus Arc 1'), TO_TIMESTAMP('2024-03-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2024-03-01 18:00:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO Acces (iddep, Groupe_id, Lieu_id, date_debut, date_fin) VALUES (Acces_SEQPK.NEXTVAL, (SELECT id FROM Groupes WHERE nom = 'Ingénierie'), (SELECT id FROM Lieux WHERE nom = 'Campus Arc 2'), TO_TIMESTAMP('2024-03-02 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2024-03-02 18:00:00', 'YYYY-MM-DD HH24:MI:SS'));
 
--- Insertions pour la table HistoriqueUtilisations
-INSERT INTO HistoriqueUtilisations (uuid, clef_ref_uuid, serrure_ref_uuid, personne_ref_uuid, dateUtilisation) VALUES ('a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6', 'aaaabbbb-cccc-dddd-eeee-ffff00001111', '111a222b-333c-444d-555e-666f777g888h', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', TO_TIMESTAMP('2024-03-26 15:30:00', 'YYYY-MM-DD HH24:MI:SS'));
-INSERT INTO HistoriqueUtilisations (uuid, clef_ref_uuid, serrure_ref_uuid, personne_ref_uuid, dateUtilisation) VALUES ('p6o5n4m3-l2k1-j0i9-h8g7-f6e5d4c3b2a1', '22223333-4444-5555-6666-777788889999', '999a888b-777c-666d-555e-444f333g222h', '6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', TO_TIMESTAMP('2024-03-27 10:15:00', 'YYYY-MM-DD HH24:MI:SS'));
+-- Insertions pour la table Historiques
+INSERT INTO Historiques (iddep, Serrure_id, Clef_id, date_utilisation) VALUES (Histo_SEQPK.NEXTVAL, (SELECT id FROM Serrures WHERE cardinalite = 'NORD'), (SELECT id FROM Clefs WHERE numero_de_serie = 'ABC123456'), TO_TIMESTAMP('2024-03-26 15:30:00', 'YYYY-MM-DD HH24:MI:SS'));
+INSERT INTO Historiques (iddep, Serrure_id, Clef_id, date_utilisation) VALUES (Histo_SEQPK.NEXTVAL, (SELECT id FROM Serrures WHERE cardinalite = 'EST'), (SELECT id FROM Clefs WHERE numero_de_serie = 'XYZ654321'), TO_TIMESTAMP('2024-03-27 10:15:00', 'YYYY-MM-DD HH24:MI:SS'));
 
--- Insertions pour la table Registres
-INSERT INTO Registres (uuid, personne_ref_uuid, clef_ref_uuid, dateDebut, dateFin) VALUES ('reg-001-uuid-0000-0000-000000000001', '1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', 'aaaabbbb-cccc-dddd-eeee-ffff00001111', TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-03-31', 'YYYY-MM-DD'));
-INSERT INTO Registres (uuid, personne_ref_uuid, clef_ref_uuid, acces_ref_uuid, dateDebut, dateFin) VALUES ('reg-002-uuid-1111-1111-111111111112', '6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', '22223333-4444-5555-6666-777788889999', 'acces1-uuid-0000-0000-000000000000', TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-04-30', 'YYYY-MM-DD'));
+-- Insertions pour la table Registre
+INSERT INTO Registre (iddep, Clef_id, Personne_id, date_debut, date_fin) VALUES (Registre_SEQPK.NEXTVAL, (SELECT id FROM Clefs WHERE numero_de_serie = 'ABC123456'), (SELECT id FROM Personnes WHERE nom = 'Durand' AND prenom = 'Sophie'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-03-31', 'YYYY-MM-DD'));
+INSERT INTO Registre (iddep, Clef_id, Personne_id, date_debut, date_fin) VALUES (Registre_SEQPK.NEXTVAL, (SELECT id FROM Clefs WHERE numero_de_serie = 'XYZ654321'), (SELECT id FROM Personnes WHERE nom = 'Petit' AND prenom = 'Jean'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-04-30', 'YYYY-MM-DD'));
 
 -- Insertions pour la table FAIS_PARTIE_DE
-INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', '12345678-1234-1234-1234-1234567890ab');
-INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', 'abcdefab-abcd-abcd-abcd-abcdefabcdef');
-INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', '12345678-1234-1234-1234-1234567890ab');
-INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', 'abcdefab-abcd-abcd-abcd-abcdefabcdef');
+INSERT INTO fais_partie_de (Groupe_parent_id, Groupe_enfant_id) VALUES ((SELECT id FROM Groupes WHERE nom = 'HE-Arc'), (SELECT id FROM Groupes WHERE nom = 'Gestion'));
+INSERT INTO fais_partie_de (Groupe_parent_id, Groupe_enfant_id) VALUES ((SELECT id FROM Groupes WHERE nom = 'HE-Arc'), (SELECT id FROM Groupes WHERE nom = 'Ingénierie'));
+INSERT INTO fais_partie_de (Groupe_parent_id, Groupe_enfant_id) VALUES ((SELECT id FROM Groupes WHERE nom = 'Gestion'), (SELECT id FROM Groupes WHERE nom = 'Petit'));
+INSERT INTO fais_partie_de (Groupe_parent_id, Groupe_enfant_id) VALUES ((SELECT id FROM Groupes WHERE nom = 'Ingénierie'), (SELECT id FROM Groupes WHERE nom = 'Durand'));
 
--- # TODO utiliser les seq
+
+-- Génération xml de la liste des personnes par groupes
+INSERT INTO journal_xml (numero, xml_data, description)
+SELECT seq_journal_xml.NEXTVAL, xml_data, 'Liste des personnes par groupes'
+FROM vue_personnes_groupes_xml;
+
+-- Génération xml de l'historique d'utilisation des clefs
+INSERT INTO journal_xml (numero, xml_data, description)
+SELECT seq_journal_xml.NEXTVAL, xml_data, 'Historique d''utilisation des clefs'
+FROM vue_historique_utilisations_xml;

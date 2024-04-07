@@ -178,7 +178,7 @@ Triggers Detail			</td>
 			<td>
 			</td>
 			<td>
-<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BIR<br>	BEFORE INSERT ON Groupes FOR EACH ROW<br>	DECLARE<br>	vl_newrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_newrec.id := :NEW.id;<br>vl_newrec.Personne_membre_de_id := :NEW.Personne_membre_de_id;<br>vl_newrec.nom := :NEW.nom;<br>vl_newrec.description := :NEW.description;<br>		Groupe_TAPIs.autogen_column_ins(vl_newrec);<br>		Groupe_TAPIs.autogen_column(vl_newrec);<br>		Groupe_TAPIs.checktype_column(vl_newrec);<br>		Groupe_TAPIs.uppercase_column(vl_newrec);<br>		Groupe_TAPIs.column_PEA(vl_newrec);<br><br>:NEW.id := vl_newrec.id;<br>:NEW.Personne_membre_de_id := vl_newrec.Personne_membre_de_id;<br>:NEW.nom := vl_newrec.nom;<br>:NEW.description := vl_newrec.description;<br>	END;<br></span>			</td>
+<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BIR<br>	BEFORE INSERT ON Groupes FOR EACH ROW<br>	DECLARE<br>	vl_newrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_newrec.id := :NEW.id;<br>vl_newrec.nom := :NEW.nom;<br>vl_newrec.description := :NEW.description;<br>		Groupe_TAPIs.autogen_column_ins(vl_newrec);<br>		Groupe_TAPIs.autogen_column(vl_newrec);<br>		Groupe_TAPIs.checktype_column(vl_newrec);<br>		Groupe_TAPIs.uppercase_column(vl_newrec);<br>		Groupe_TAPIs.column_PEA(vl_newrec);<br><br>:NEW.id := vl_newrec.id;<br>:NEW.nom := vl_newrec.nom;<br>:NEW.description := vl_newrec.description;<br>	END;<br></span>			</td>
 		</tr>
 		<tr class="TableRow1">
 			<td>
@@ -244,7 +244,7 @@ Triggers Detail			</td>
 			<td>
 			</td>
 			<td>
-<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BUR<br>	BEFORE UPDATE ON Groupes FOR EACH ROW<br>	DECLARE<br>	vl_newrec Groupes%ROWTYPE;<br>	vl_oldrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_newrec.id := :NEW.id;<br>vl_newrec.Personne_membre_de_id := :NEW.Personne_membre_de_id;<br>vl_newrec.nom := :NEW.nom;<br>vl_newrec.description := :NEW.description;<br><br>vl_oldrec.id := :OLD.id;<br>vl_oldrec.Personne_membre_de_id := :OLD.Personne_membre_de_id;<br>vl_oldrec.nom := :OLD.nom;<br>vl_oldrec.description := :OLD.description;<br>		Groupe_TAPIs.autogen_column_upd(vl_newrec);<br>		Groupe_TAPIs.autogen_column(vl_newrec);<br>		Groupe_TAPIs.checktype_column(vl_newrec);<br>		Groupe_TAPIs.uppercase_column(vl_newrec);<br>		Groupe_TAPIs.column_PEA(vl_newrec);<br>		Groupe_TAPIs.frozen_column(vl_newrec, vl_oldrec);<br><br>:NEW.id := vl_newrec.id;<br>:NEW.Personne_membre_de_id := vl_newrec.Personne_membre_de_id;<br>:NEW.nom := vl_newrec.nom;<br>:NEW.description := vl_newrec.description;<br>	END;<br></span>			</td>
+<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BUR<br>	BEFORE UPDATE ON Groupes FOR EACH ROW<br>	DECLARE<br>	vl_newrec Groupes%ROWTYPE;<br>	vl_oldrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_newrec.id := :NEW.id;<br>vl_newrec.nom := :NEW.nom;<br>vl_newrec.description := :NEW.description;<br><br>vl_oldrec.id := :OLD.id;<br>vl_oldrec.nom := :OLD.nom;<br>vl_oldrec.description := :OLD.description;<br>		Groupe_TAPIs.autogen_column_upd(vl_newrec);<br>		Groupe_TAPIs.autogen_column(vl_newrec);<br>		Groupe_TAPIs.checktype_column(vl_newrec);<br>		Groupe_TAPIs.uppercase_column(vl_newrec);<br>		Groupe_TAPIs.column_PEA(vl_newrec);<br>		Groupe_TAPIs.frozen_column(vl_newrec, vl_oldrec);<br><br>:NEW.id := vl_newrec.id;<br>:NEW.nom := vl_newrec.nom;<br>:NEW.description := vl_newrec.description;<br>	END;<br></span>			</td>
 		</tr>
 		<tr class="TableRow1">
 			<td>
@@ -376,7 +376,7 @@ Triggers Detail			</td>
 			<td>
 			</td>
 			<td>
-<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BDR<br>	BEFORE DELETE ON Groupes FOR EACH ROW<br>	DECLARE<br>	 	vl_oldrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_oldrec.id := :OLD.id;<br>vl_oldrec.Personne_membre_de_id := :OLD.Personne_membre_de_id;<br>vl_oldrec.nom := :OLD.nom;<br>vl_oldrec.description := :OLD.description;<br><br>	END;<br></span>			</td>
+<span class="TableContent">CREATE OR REPLACE TRIGGER Groupe_BDR<br>	BEFORE DELETE ON Groupes FOR EACH ROW<br>	DECLARE<br>	 	vl_oldrec Groupes%ROWTYPE;<br><br>	BEGIN<br><br>vl_oldrec.id := :OLD.id;<br>vl_oldrec.nom := :OLD.nom;<br>vl_oldrec.description := :OLD.description;<br><br>	END;<br></span>			</td>
 		</tr>
 		<tr class="TableRow1">
 			<td>

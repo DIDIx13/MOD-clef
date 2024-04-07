@@ -1,132 +1,27 @@
-CREATE SEQUENCE Groupe_SEQPK CACHE 20;
-CREATE SEQUENCE Acces_SEQPK CACHE 20;
-CREATE SEQUENCE Personne_SEQPK CACHE 20;
-CREATE SEQUENCE Clef_SEQPK CACHE 20;
-CREATE SEQUENCE Registre_SEQPK CACHE 20;
-CREATE SEQUENCE Lieu_SEQPK CACHE 20;
-CREATE SEQUENCE Serrure_SEQPK CACHE 20;
-CREATE SEQUENCE Histo_SEQPK CACHE 20;
-CREATE SEQUENCE fais_SEQPK CACHE 20;
-CREATE TABLE Groupes (
-  id          number(9) NOT NULL, 
-  nom         varchar2(2000) NOT NULL, 
-  description varchar2(2000), 
-  CONSTRAINT PK_Groupe 
-    PRIMARY KEY (id), 
-  CONSTRAINT Groupe_id_DATATYPE 
-    CHECK ((id>0)));
-CREATE TABLE Acces (
-  Groupe_id  number(9) NOT NULL, 
-  Lieu_id    number(9) NOT NULL, 
-  iddep      number(9) NOT NULL, 
-  date_debut timestamp(0) NOT NULL, 
-  date_fin   timestamp(0) NOT NULL, 
-  CONSTRAINT PK_Acces 
-    PRIMARY KEY (Groupe_id, 
-  Lieu_id, 
-  iddep), 
-  CONSTRAINT Acces_iddep_DATATYPE 
-    CHECK ((iddep>0)));
-CREATE TABLE Personnes (
-  id                  number(9) NOT NULL, 
-  Groupe_membre_de_id number(9) NOT NULL, 
-  nom                 varchar2(2000) NOT NULL, 
-  prenom              varchar2(2000) NOT NULL, 
-  email               varchar2(2000) NOT NULL, 
-  CONSTRAINT PK_Personne 
-    PRIMARY KEY (id), 
-  CONSTRAINT FK1_Personne_MaxOne 
-    UNIQUE (Groupe_membre_de_id), 
-  CONSTRAINT NID1_Personne_email_nom_prenom 
-    UNIQUE (email, nom, prenom), 
-  CONSTRAINT Personne_id_DATATYPE 
-    CHECK ((id>0)));
-CREATE TABLE Clefs (
-  id              number(9) NOT NULL, 
-  numero_de_serie varchar2(2000) NOT NULL, 
-  status          varchar2(2000), 
-  CONSTRAINT PK_Clef 
-    PRIMARY KEY (id), 
-  CONSTRAINT NID1_Clef_numero_de_serie 
-    UNIQUE (numero_de_serie), 
-  CONSTRAINT Clef_id_DATATYPE 
-    CHECK ((id>0)));
-CREATE TABLE Registre (
-  Clef_id     number(9) NOT NULL, 
-  Personne_id number(9) NOT NULL, 
-  iddep       number(9) NOT NULL, 
-  date_debut  timestamp(0) NOT NULL, 
-  date_fin    timestamp(0) NOT NULL, 
-  CONSTRAINT PK_Registre 
-    PRIMARY KEY (Clef_id, 
-  Personne_id, 
-  iddep), 
-  CONSTRAINT Registre_iddep_DATATYPE 
-    CHECK ((iddep>0)));
-CREATE TABLE Lieux (
-  id               number(9) NOT NULL, 
-  Lieu_contient_id number(9), 
-  nom              varchar2(2000) NOT NULL, 
-  CONSTRAINT PK_Lieu 
-    PRIMARY KEY (id), 
-  CONSTRAINT Lieu_id_DATATYPE 
-    CHECK ((id>0)));
-CREATE TABLE Serrures (
-  id                number(9) NOT NULL, 
-  Lieu_verouille_id number(9) NOT NULL, 
-  cardinalite       varchar2(2000), 
-  CONSTRAINT PK_Serrure 
-    PRIMARY KEY (id), 
-  CONSTRAINT Serrure_id_DATATYPE 
-    CHECK ((id>0)));
-CREATE TABLE Historiques (
-  Serrure_id       number(9) NOT NULL, 
-  Clef_id          number(9) NOT NULL, 
-  iddep            number(9) NOT NULL, 
-  date_utilisation timestamp(0) NOT NULL, 
-  CONSTRAINT PK_Histo 
-    PRIMARY KEY (Serrure_id, 
-  Clef_id, 
-  iddep), 
-  CONSTRAINT Histo_iddep_DATATYPE 
-    CHECK ((iddep>0)));
-CREATE TABLE fais_partie_de (
-  Groupe_parent_id number(9) NOT NULL, 
-  Groupe_enfant_id number(9) NOT NULL, 
-  CONSTRAINT PK_fais 
-    PRIMARY KEY (Groupe_parent_id, 
-  Groupe_enfant_id));
-CREATE INDEX FK1_Acces_Groupe 
-  ON Acces (Groupe_id);
-CREATE INDEX FK2_Acces_Lieu 
-  ON Acces (Lieu_id);
-CREATE INDEX FK1_Registre_Clef 
-  ON Registre (Clef_id);
-CREATE INDEX FK2_Registre_Personne 
-  ON Registre (Personne_id);
-CREATE INDEX FK1_Lieu_Lieu_contient 
-  ON Lieux (Lieu_contient_id);
-CREATE INDEX FK1_Serrure_Lieu_verouille 
-  ON Serrures (Lieu_verouille_id);
-CREATE INDEX FK1_Histo_Serrure 
-  ON Historiques (Serrure_id);
-CREATE INDEX FK2_Histo_Clef 
-  ON Historiques (Clef_id);
-CREATE INDEX FK1_fais_Groupe_parent 
-  ON fais_partie_de (Groupe_parent_id);
-CREATE INDEX FK2_fais_Groupe_enfant 
-  ON fais_partie_de (Groupe_enfant_id);
-ALTER TABLE Serrures ADD CONSTRAINT FK1_Serrure_Lieu_verouille FOREIGN KEY (Lieu_verouille_id) REFERENCES Lieux (id);
-ALTER TABLE fais_partie_de ADD CONSTRAINT FK2_fais_Groupe_enfant FOREIGN KEY (Groupe_enfant_id) REFERENCES Groupes (id);
-ALTER TABLE fais_partie_de ADD CONSTRAINT FK1_fais_Groupe_parent FOREIGN KEY (Groupe_parent_id) REFERENCES Groupes (id);
-ALTER TABLE Historiques ADD CONSTRAINT FK2_Histo_Clef FOREIGN KEY (Clef_id) REFERENCES Clefs (id);
-ALTER TABLE Historiques ADD CONSTRAINT FK1_Histo_Serrure FOREIGN KEY (Serrure_id) REFERENCES Serrures (id);
-ALTER TABLE Lieux ADD CONSTRAINT FK1_Lieu_Lieu_contient FOREIGN KEY (Lieu_contient_id) REFERENCES Lieux (id);
-ALTER TABLE Registre ADD CONSTRAINT FK2_Registre_Personne FOREIGN KEY (Personne_id) REFERENCES Personnes (id);
-ALTER TABLE Registre ADD CONSTRAINT FK1_Registre_Clef FOREIGN KEY (Clef_id) REFERENCES Clefs (id);
-ALTER TABLE Acces ADD CONSTRAINT FK2_Acces_Lieu FOREIGN KEY (Lieu_id) REFERENCES Lieux (id);
-ALTER TABLE Acces ADD CONSTRAINT FK1_Acces_Groupe FOREIGN KEY (Groupe_id) REFERENCES Groupes (id);
-ALTER TABLE Personnes ADD CONSTRAINT FK1_Personne_Groupe_membre_de FOREIGN KEY (Groupe_membre_de_id) REFERENCES Groupes (id);
+ALTER SEQUENCE Groupe_SEQPK CACHE 20;
+ALTER SEQUENCE Acces_SEQPK CACHE 20;
+ALTER SEQUENCE Personne_SEQPK CACHE 20;
+ALTER SEQUENCE Clef_SEQPK CACHE 20;
+ALTER SEQUENCE Registre_SEQPK CACHE 20;
+ALTER SEQUENCE Lieu_SEQPK CACHE 20;
+ALTER SEQUENCE Serrure_SEQPK CACHE 20;
+ALTER SEQUENCE Histo_SEQPK CACHE 20;
+ALTER SEQUENCE fais_SEQPK CACHE 20;
+ALTER TABLE Clefs 
+  DROP CONSTRAINT NID1_Clef_numero_de_serie;
+ALTER TABLE Personnes 
+  DROP CONSTRAINT NID1_Personne_email_nom_prenom;
+ALTER TABLE Personnes 
+  DROP CONSTRAINT FK1_Personne_MaxOne;
+ALTER TABLE Personnes 
+  ADD CONSTRAINT FK1_Personne_MaxOne 
+    UNIQUE (Groupe_membre_de_id);
+ALTER TABLE Personnes 
+  ADD CONSTRAINT NID1_Personne_email_nom_prenom 
+    UNIQUE (email, nom, prenom);
+ALTER TABLE Clefs 
+  ADD CONSTRAINT NID1_Clef_numero_de_serie 
+    UNIQUE (numero_de_serie);
 create or replace PACKAGE UTIL IS
 MYTRUE  CONSTANT CHAR := 'Y';
 MYFALSE CONSTANT CHAR := 'N';

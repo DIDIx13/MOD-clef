@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Définition des types complexes -->
+
+  <xs:complexType name="GroupeType">
+    <xs:sequence>
+      <xs:element name="Groupe" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="ID" type="xs:integer"/>
+          <xs:attribute name="NomGroupe" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Définition de l'élément racine -->
+
+  <xs:element name="ListeGroupes" type="GroupeType"/>
+
+</xs:schema>
