@@ -1,22 +1,19 @@
 -- Vue pour la Liste des Personnes par Groupe
-CREATE OR REPLACE VIEW Vue_PersonnesParGroupe AS
-SELECT 
-    g.nom AS NomGroupe,
-    XMLAGG(
-        XMLELEMENT(
-            "Personne",
-            XMLFOREST(
-                p.nom AS "Nom",
-                p.prenom AS "Prenom",
-                p.email AS "Email"
-            )
+CREATE OR REPLACE VIEW vue_personnes_groupes_xml AS
+SELECT XMLAgg(
+        XMLElement("Groupe",
+            XMLAttributes(g.uuid AS "ID", g.nom AS "NomGroupe"),
+            (SELECT XMLAgg(
+                XMLElement("Personne",
+                    XMLAttributes(p.uuid AS "ID"),
+                    XMLElement("Nom", p.nom),
+                    XMLElement("Prenom", p.prenom),
+                    XMLElement("Email", p.email)
+                )
+             )
+             FROM Personnes p
+             JOIN FAIS_PARTIE_DE fpd ON p.uuid = fpd.personne_uuid
+             WHERE fpd.groupe_uuid = g.uuid)
         )
-    ) AS Membres
-FROM 
-    Personnes p
-JOIN 
-    FAIS_PARTIE_DE fpd ON p.uuid = fpd.personne_uuid
-JOIN 
-    Groupes g ON fpd.groupe_uuid = g.uuid
-GROUP BY 
-    g.nom;
+    ).getClobVal() AS xml_data
+FROM Groupes g;
