@@ -41,3 +41,5 @@ INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('1a2b3c4d-5e6f-7
 INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d', 'abcdefab-abcd-abcd-abcd-abcdefabcdef');
 INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', '12345678-1234-1234-1234-1234567890ab');
 INSERT INTO FAIS_PARTIE_DE (personne_uuid, groupe_uuid) VALUES ('6f8b7c9d-0e1f-2a3b-4c5d-6e7f8g9h0i1j', 'abcdefab-abcd-abcd-abcd-abcdefabcdef');
+
+-- # TODO utiliser les seq
