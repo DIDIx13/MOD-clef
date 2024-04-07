@@ -1,0 +1,56 @@
+<!-- Xml généré par la vue vue_personnes_groupes_xml -->
+<Groupes>
+	<Groupe ID="1" NomGroupe="Gestion"></Groupe>
+	<Groupe ID="1" NomGroupe="Ingénierie"></Groupe>
+	<Groupe ID="2" NomGroupe="Petit">
+		<Personnes>
+			<Personne>
+				<ID>2</ID>
+				<Nom>Petit</Nom>
+				<Prenom>Jean</Prenom>
+				<Email>jean.petit@he-arc.ch</Email>
+			</Personne>
+		</Personnes>
+	</Groupe>
+	<Groupe ID="3" NomGroupe="Durand">
+		<Personnes>
+			<Personne>
+				<ID>1</ID>
+				<Nom>Durand</Nom>
+				<Prenom>Sophie</Prenom>
+				<Email>sophie.durand@he-arc.ch</Email>
+			</Personne>
+		</Personnes>
+	</Groupe>
+</Groupes>
+
+<!-- Xml cible avec hiérarchie correcte
+<Groupes>
+	<Groupe ID="1" NomGroupe="HE-Arc">
+		<Groupe ID="2" NomGroupe="Gestion">
+			<Groupe ID="5" NomGroupe="Petit">
+				<Personnes>
+					<Personne>
+						<ID>2</ID>
+						<Nom>Petit</Nom>
+						<Prenom>Jean</Prenom>
+						<Email>jean.petit@he-arc.ch</Email>
+					</Personne>
+				</Personnes>
+			</Groupe>
+		</Groupe>
+		<Groupe ID="3" NomGroupe="Ingénierie">
+			<Groupe ID="4" NomGroupe="Durand">
+				<Personnes>
+					<Personne>
+						<ID>1</ID>
+						<Nom>Durand</Nom>
+						<Prenom>Sophie</Prenom>
+						<Email>sophie.durand@he-arc.ch</Email>
+					</Personne>
+				</Personnes>
+			</Groupe>
+		</Groupe>
+	</Groupe>
+</Groupes>
+-->

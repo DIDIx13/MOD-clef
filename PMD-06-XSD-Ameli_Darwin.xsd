@@ -1,21 +1,34 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
-  <!-- Définition des types complexes -->
-
+  <xs:element name="Groupes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Groupe" type="GroupeType" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
   <xs:complexType name="GroupeType">
     <xs:sequence>
-      <xs:element name="Groupe" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="Personnes" minOccurs="0">
         <xs:complexType>
-          <xs:attribute name="ID" type="xs:integer"/>
-          <xs:attribute name="NomGroupe" type="xs:string"/>
+          <xs:sequence>
+            <xs:element name="Personne" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ID" type="xs:integer"/>
+                  <xs:element name="Nom" type="xs:string"/>
+                  <xs:element name="Prenom" type="xs:string"/>
+                  <xs:element name="Email" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element name="Groupe" type="GroupeType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+    <xs:attribute name="ID" type="xs:integer" use="required"/>
+    <xs:attribute name="NomGroupe" type="xs:string" use="required"/>
   </xs:complexType>
-
-  <!-- Définition de l'élément racine -->
-
-  <xs:element name="ListeGroupes" type="GroupeType"/>
-
 </xs:schema>
